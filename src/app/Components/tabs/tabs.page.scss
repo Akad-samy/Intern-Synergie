@@ -1,0 +1,32 @@
+ion-header ion-toolbar {
+    text-align: center;
+}
+
+ion-tabs ion-tab-bar ion-tab-button {
+    border-top: 2px solid var(--ion-color-warning);
+    background: #114e6b;
+}
+
+ion-fab-button {
+    width: 4rem !important;
+    height: 4rem !important;
+}
+
+
+
+ion-tab-button {
+    color: var(--ion-color-light) !important;
+    ion-icon,
+    ion-label {
+        opacity: .5;
+        font-family: 'Quicksand' !important;
+    }
+}
+ion-tab-button.tab-selected {
+    color: var(--ion-color-warning) !important;
+    ion-icon,
+    ion-label {
+        opacity: 1;
+        font-weight: 900;
+    }
+}

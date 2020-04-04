@@ -1,5 +1,7 @@
 {
   "name": "custplace",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

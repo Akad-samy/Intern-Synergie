@@ -1,0 +1,21 @@
+<ion-content>
+  <ion-card>
+    <img src="{{prod.image_small_url}}" />
+    <ion-card-header>
+      <ion-card-title>{{prod.product_name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="starRating">
+        <p>3.2</p>
+        <star-rating value="3.2" totalstars="5" checkedcolor="var(--ion-color-warning)"
+          uncheckedcolor="var(--ion-color-medium)" size="18px" readonly="true" (rate)="logRatingChange($event)">
+        </star-rating>
+        <p>(12)</p>
+      </div>
+      <div class="nutri">
+        <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutrition_grades}}.svg"/>
+        <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg" alt="nova" style="margin-bottom:1rem;max-width:100%">
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
