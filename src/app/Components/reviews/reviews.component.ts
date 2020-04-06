@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ElementRef, Renderer2 } from '@angular/core';
 import { GestureController } from '@ionic/angular';
 import { Gesture, GestureConfig } from '@ionic/core';
+import { GlobalService } from 'src/app/service/global.service';
 
 @Component({
   selector: 'app-reviews',
@@ -11,7 +12,8 @@ export class ReviewsComponent implements AfterViewInit {
   constructor(
     private gestureCtrl: GestureController,
     private element: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private gService: GlobalService,
   ) {}
 
   async ngAfterViewInit() {
@@ -36,6 +38,10 @@ export class ReviewsComponent implements AfterViewInit {
         }
       },
       onEnd: (ev) => {
+        this.gService.hideImgs = true;
+
+        console.log(this.gService.hideImgs)
+
         this.renderer.setStyle(
           this.element.nativeElement,
           'transition',

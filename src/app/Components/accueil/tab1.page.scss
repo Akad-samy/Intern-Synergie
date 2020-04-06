@@ -1,6 +1,9 @@
 ion-content ion-toolbar {
   --background: translucent;
 }
+ion-content {
+  --overflow: hidden;
+}
 
 ion-card {
   border-radius: 1rem;

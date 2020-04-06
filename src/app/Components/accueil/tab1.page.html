@@ -1,6 +1,7 @@
 <ion-content>
+  {{getHideImgs()}}
   <ion-card class="product">
-    <img src="{{prod.image_small_url}}" />
+    <img src="{{prod.image_small_url}}" *ngIf="gService.hideImgs === false"/>
     <ion-card-header>
       <ion-card-title>{{prod.product_name}}</ion-card-title>
     </ion-card-header>
@@ -17,14 +18,14 @@
         <p>(12)</p>
       </div>
       <div class="nutri">
-        <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutrition_grades}}.svg" />
-        <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg" alt="nova"
+        <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutrition_grades}}.svg"  *ngIf="gService.hideImgs === false" />
+        <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg" alt="nova"  *ngIf="gService.hideImgs === false"
           style="margin-bottom:1rem;max-width:100%">
       </div>
     </ion-card-content>
   </ion-card>
 
   
-  <app-reviews></app-reviews>
+  <app-reviews #reviews></app-reviews>
   
 </ion-content>
