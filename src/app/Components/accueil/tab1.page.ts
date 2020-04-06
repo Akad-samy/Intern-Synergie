@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/service/api.service';
 })
 export class Tab1Page {
   codeBar = '7622210204424';
-  prod ;
+  prod = '' ;
   constructor(private service: ApiService) {}
 
   ngOnInit() {
