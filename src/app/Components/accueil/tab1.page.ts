@@ -20,6 +20,7 @@ export class Tab1Page {
 
   ngOnInit() {
     this.getProduct();
+    console.log(this.globalService.historique)
   }
 
   getProduct() {
@@ -32,9 +33,13 @@ export class Tab1Page {
 
    getStorageData(){
      Storage.get({key: 'historique'}).then((e) => {
-      this.globalService.historique = [this.prod];
-      console.log(this.prod)
-      this.globalService.historique.push(this.prod);
+      this.globalService.historique = JSON.parse(e.value);
+      console.log(e.value)
+      if(this.globalService.historique === null) {
+        this.globalService.historique = [this.prod];
+      } else {
+        this.globalService.historique.push(this.prod);
+      }
       Storage.set({
         key: 'historique',
         value: JSON.stringify(this.globalService.historique),
@@ -48,23 +53,6 @@ export class Tab1Page {
       console.error(this.globalService.historique)
     })
   }
-
-  // saveProducts() {
-
-  //   const json = JSON.stringify(this.prod);
-  //   console.log(json);
-
-  //   Storage.set({
-  //     key: 'historique',
-  //     value: json,
-  //   })
-  //     .then((res) => {
-  //       console.log('data stored : ' + res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
 
   // logRatingChange(e) {
   //   console.log(e.newValue);
