@@ -10,8 +10,9 @@ const { Storage } = Plugins;
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
-  codeBar = '7622210204424'; // 3116430208941
+  codeBar = '7622210204424'; // 3116430208941 // 3045140105502  // 7622210204424
   prod = '';
+
   constructor(
     private apiService: ApiService,
     public globalService: GlobalService
@@ -25,27 +26,45 @@ export class Tab1Page {
     this.apiService.getData(this.codeBar).subscribe((e) => {
       console.log(e['product']);
       this.prod = e['product'];
-      this.saveProducts(e['product']);
+      this.getStorageData()
     });
   }
 
-  saveProducts(item) {
-    this.globalService.historique.unshift(item);
-
-    const json = JSON.stringify(this.globalService.historique);
-    console.log(json);
-
-    Storage.set({
-      key: 'historique',
-      value: json,
-    })
-      .then((res) => {
-        console.log('data stored : ' + res);
+   getStorageData(){
+     Storage.get({key: 'historique'}).then((e) => {
+      this.globalService.historique = [this.prod];
+      console.log(this.prod)
+      this.globalService.historique.push(this.prod);
+      Storage.set({
+        key: 'historique',
+        value: JSON.stringify(this.globalService.historique),
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          console.log('data stored : ' + res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.error(this.globalService.historique)
+    })
   }
+
+  // saveProducts() {
+
+  //   const json = JSON.stringify(this.prod);
+  //   console.log(json);
+
+  //   Storage.set({
+  //     key: 'historique',
+  //     value: json,
+  //   })
+  //     .then((res) => {
+  //       console.log('data stored : ' + res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
 
   // logRatingChange(e) {
   //   console.log(e.newValue);
