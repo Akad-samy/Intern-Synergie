@@ -1,7 +1,8 @@
 {
   "name": "custplace",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

@@ -1,0 +1,29 @@
+<ion-icon name="close-outline" (click)="close()" size="large" style="color: #fff; margin-left: auto; opacity: .8;"></ion-icon>
+<div style="margin: auto 0;">
+  <ion-card>
+    <form [formGroup]='reviewForm'>
+      <ion-item>
+        <ion-label position="floating">Nom</ion-label>
+        <ion-input type="text" formControlName="nom"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Review</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>Rate</ion-label>
+        <ion-range dualKnobs="false" min="1" max="5" snaps="true" color="warning" step="1" formControlName="rating">
+          <ion-label slot="start">1</ion-label>
+          <ion-label slot="end">5</ion-label>
+        </ion-range>
+      </ion-item>
+      <ion-button [disabled]='!reviewForm.valid' (click)="submit()" expand="block" fill="clear" shape="round" type='submit'>
+        Envoyer
+      </ion-button>
+    </form>
+  </ion-card>
+</div>

@@ -6,6 +6,9 @@ ion-tabs ion-tab-bar ion-tab-button {
     border-top: 2px solid var(--ion-color-warning);
     background: #114e6b;
 }
+ion-content {
+    // margin-bottom: 2rem;
+}
 
 ion-fab-button {
     width: 4rem !important;

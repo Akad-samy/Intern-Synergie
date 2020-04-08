@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
 
-  hideImgs = false;
+  productReviews = [];
+  favoris = [];
+  historique =[];
+  
   constructor() { }
 }
