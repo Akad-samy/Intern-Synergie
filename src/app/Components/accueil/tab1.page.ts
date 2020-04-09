@@ -10,36 +10,59 @@ const { Storage } = Plugins;
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
-  codeBar = '7622210204424'; // 3116430208941 // 3045140105502  // 7622210204424
+  codeBar = '3116430208941'; // 3116430208941 // 3045140105502  // 7622210204424
   prod = '';
+  setProd;
 
   constructor(
     private apiService: ApiService,
     public globalService: GlobalService
   ) {}
 
-  ngOnInit() {
+  // ngOnInit() {
+  //   this.getProduct();
+  //   console.log(this.globalService.historique)
+  // }
+
+  ionViewWillEnter() {
     this.getProduct();
+  }
+  // get product from codebar     this.globalService.codebar
+  
+  getProduct() {
+    this.apiService.getData(this.globalService.codebar).subscribe((e) => {
+      console.log(e['product']);
+      this.prod = e['product'];
+      this.setStorageData()
+    });
     console.log(this.globalService.historique)
   }
 
-  getProduct() {
-    this.apiService.getData(this.codeBar).subscribe((e) => {
-      console.log(e['product']);
-      this.prod = e['product'];
-      this.getStorageData()
-    });
-  }
+   setStorageData(){
+     // get data from storage
 
-   getStorageData(){
      Storage.get({key: 'historique'}).then((e) => {
-      this.globalService.historique = JSON.parse(e.value);
+      this.setProd = JSON.parse(e.value);
       console.log(e.value)
-      if(this.globalService.historique === null) {
-        this.globalService.historique = [this.prod];
+      if(this.setProd === null) {
+        this.setProd = [this.prod];
       } else {
-        this.globalService.historique.push(this.prod);
+        this.setProd.unshift(this.prod);
       }
+
+      // Remove duplicated products
+
+      this.globalService.historique = this.setProd.reduce((acc, current) => {
+        const x = acc.find(item => item._id === current._id);
+        if (!x) {
+          return acc.concat([current]);
+        } else {
+          return acc;
+        }
+      }, []);
+
+      // set data to storage
+
       Storage.set({
         key: 'historique',
         value: JSON.stringify(this.globalService.historique),
