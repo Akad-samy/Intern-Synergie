@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
 
-  codebar = '3116430208941';
+  codebar = '';
   productReviews = [];
   favoris = [];
-  historique =[];
-  
+  historique = [];
+
   constructor() { }
 }

@@ -6,7 +6,7 @@ ion-content {
 }
 
 .product { 
-  text-align: center;
+  text-align: left;
   width: 80%;
   margin: 1rem auto;
   // padding: 1rem;
@@ -18,11 +18,14 @@ ion-content {
   }
 
   .imgProduct{
-    margin: auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   ion-card-header{
-    padding: 1rem 0;
+    padding: 1rem;
+    z-index: 0;
   }
 
   ion-card-title {
@@ -37,13 +40,19 @@ ion-content {
   }
 
   .starRating {
+    padding: 0 1rem;
     p {
       font-size: 14px;
       padding: 0;
-      margin: .5rem;
+      margin-right: .5rem;
       display: inline;
       font-weight: 600;
       color: #000;
+
+      small {
+      margin-left: .5rem;
+      font-weight: 400 !important;
+      }
     }
 
     .stars {

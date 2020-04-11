@@ -1,43 +1,50 @@
 <ion-content>
-  <ion-card class="product">
-    <ion-grid fixed>
-      <ion-row>
-        <ion-col size="3" class="imgProduct">
-          <img src="{{prod.image_small_url}}" />
-        </ion-col>
-        <ion-col size="9">
-          <div style="float: right;">
-            <ion-icon (click)="addFavoris()" name="heart" size="small" style="color:var(--ion-color-medium);"></ion-icon>
-          </div>
-          <ion-card-header>
-            <ion-card-title>{{prod.product_name}}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <div class="starRating">
-              <p>3.2</p>
-              <div class="stars">
-                <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                <ion-icon slot="start" name="star"></ion-icon>
+  <div *ngIf="prod._id != ''">
+    <ion-card class="product">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="3" class="imgProduct">
+            <img src="{{prod.image_small_url}}" />
+          </ion-col>
+          <ion-col size="9">
+            <div style="float: right;z-index: 10; position: relative;">
+              <ion-icon (click)="addFavoris()" name="heart" size="small"
+                [ngStyle]="{ 'color': inFavoris === true ? danger : medium }"></ion-icon>
+            </div>
+            <ion-card-header>
+              <ion-card-title>{{prod.product_name}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="starRating">
+                <p>3.2</p>
+                <div class="stars">
+                  <ion-icon slot="start" name="star" class="checked"></ion-icon>
+                  <ion-icon slot="start" name="star" class="checked"></ion-icon>
+                  <ion-icon slot="start" name="star" class="checked"></ion-icon>
+                  <ion-icon slot="start" name="star" class="checked"></ion-icon>
+                  <ion-icon slot="start" name="star"></ion-icon>
+                </div>
+                <p><small>(12)</small></p>
               </div>
-              <p>(12)</p>
-            </div>
-            <div class="nutri">
-              <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutrition_grades}}.svg"/>
-              <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg" alt="nova"
-                style="margin-bottom:1rem;max-width:100%">
-            </div>
-          </ion-card-content>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+              <div class="nutri" *ngIf='prod.nutrition_grades != undefined'>
+                <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutrition_grades}}.svg"
+                  alt="nutri" />
+                <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg" alt="nova"
+                  style="margin-bottom:1rem;max-width:100%">
+              </div>
+              <div class="nutri" *ngIf='prod.nutrition_grades === undefined' style="opacity: .5;">
+                <img src="../../../assets/nutriscor.png"
+                  alt="nutri" />
+                <img src="../../../assets/nova-group-4.png" alt="nova"
+                  style="margin-bottom:1rem;max-width:100%">
+              </div>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+    <app-reviews></app-reviews>
+  </div>
 
-
-  </ion-card>
-
-
-  <app-reviews></app-reviews>
 
 </ion-content>
