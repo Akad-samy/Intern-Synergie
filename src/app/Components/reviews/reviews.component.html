@@ -2,21 +2,26 @@
   <h3>Avis</h3>
   <ion-icon class="text" name="chatbox-ellipses-outline" (click)="addReview()"></ion-icon>
 </div>
+<div style="text-align: center;padding: 1rem;" *ngIf="this.globalService.productReviews.length === 0">
+  <ion-label>
+    <p>Appuyez sur <ion-icon class="text" name="chatbox-ellipses-outline"></ion-icon> pour ajouter votre avis</p>
+  </ion-label>
+</div>
 
-<div class="reviews">
+<div class="reviews" *ngIf="this.globalService.productReviews.length != 0">
   <ion-grid fixed>
     <ion-row *ngFor="let review of globalService.productReviews">
       <ion-col size="3" style="text-align: center;">
         <ion-avatar>
           <h3>{{review.nom?.substring(0,1) | uppercase}}</h3>
         </ion-avatar>
-          <div class="stars">
-            <ion-icon slot="start" name="star" class="checked"></ion-icon>
-            <ion-icon slot="start" name="star" class="checked"></ion-icon>
-            <ion-icon slot="start" name="star" class="checked"></ion-icon>
-            <ion-icon slot="start" name="star" class="checked"></ion-icon>
-            <ion-icon slot="start" name="star"></ion-icon>
-          </div>
+        <div class="stars">
+          <ion-icon slot="start" name="star" class="checked"></ion-icon>
+          <ion-icon slot="start" name="star" class="checked"></ion-icon>
+          <ion-icon slot="start" name="star" class="checked"></ion-icon>
+          <ion-icon slot="start" name="star" class="checked"></ion-icon>
+          <ion-icon slot="start" name="star"></ion-icon>
+        </div>
       </ion-col>
       <ion-col size="9">
         <ion-label>
@@ -29,6 +34,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
+ 
 
 </div>

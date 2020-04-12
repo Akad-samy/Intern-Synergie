@@ -1,5 +1,11 @@
 <ion-content>
-  <div *ngIf="prod._id != ''">
+  <div class="home"  *ngIf="this.globalService.codebar === ''">
+    <div>
+      <ion-icon name="barcode-outline"></ion-icon>
+      <p>Appuyez ici et scanner le codebar de Votre produit</p>
+    </div>
+  </div>
+  <div *ngIf="this.globalService.codebar != ''">
     <ion-card class="product">
       <ion-grid fixed>
         <ion-row>
@@ -15,7 +21,7 @@
               <ion-card-title>{{prod.product_name}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <div class="starRating">
+              <div class="starRating"> 
                 <p>3.2</p>
                 <div class="stars">
                   <ion-icon slot="start" name="star" class="checked"></ion-icon>
@@ -33,10 +39,8 @@
                   style="margin-bottom:1rem;max-width:100%">
               </div>
               <div class="nutri" *ngIf='prod.nutrition_grades === undefined' style="opacity: .5;">
-                <img src="../../../assets/nutriscor.png"
-                  alt="nutri" />
-                <img src="../../../assets/nova-group-4.png" alt="nova"
-                  style="margin-bottom:1rem;max-width:100%">
+                <img src="../../../assets/nutriscor.png" alt="nutri" />
+                <img src="../../../assets/nova-group-4.png" alt="nova" style="margin-bottom:1rem;max-width:100%">
               </div>
             </ion-card-content>
           </ion-col>

@@ -1,9 +1,39 @@
+<ion-toolbar color="primary">
 
+  <ion-searchbar [(ngModel)]="myInput" placeholder="Nom du Produit" animated="true" clearIcon="close-circle" (change)="getProduct($event)">
+  </ion-searchbar>
 
+</ion-toolbar>
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div *ngIf="myInput === ''">
+
+  </div>
+  <div class="results" *ngIf="this.myInput != ''">
+    <ion-card class="product" *ngFor="let prod of prods">
+      <ion-grid fixed>
+        <ion-row (click)="showProduct(prod._id)">
+          <ion-col size="3" class="img-product">
+            <img src="{{prod.image_small_url}}" />
+          </ion-col>
+          <ion-col size="9">
+            <ion-card-header>
+              <ion-card-title>{{prod.product_name}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="nutri" *ngIf='prod.nutrition_grades != undefined'>
+                <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutrition_grades}}.svg"
+                  alt="nutrition" />
+                <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg" alt="nova"
+                  style="margin-bottom:1rem;max-width:100%">
+              </div>
+              <div class="nutri" *ngIf='prod.nutrition_grades === undefined ' style="opacity: .5;">
+                <img src="../../../assets/nutriscor.png" alt="nutri" />
+                <img src="../../../assets/nova-group-4.png" alt="nova" style="margin-bottom:1rem;max-width:100%">
+              </div>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
 </ion-content>

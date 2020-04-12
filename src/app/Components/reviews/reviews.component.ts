@@ -13,6 +13,7 @@ export class ReviewsComponent {
   constructor(private modalController: ModalController, public globalService:GlobalService) {}
 
 ngOnInit() {
+  console.log('reviews length: ' + this.globalService.productReviews.length)
 }
 
   async addReview() {
@@ -24,6 +25,7 @@ ngOnInit() {
     modal.onDidDismiss().then(
       (e) => {
         this.globalService.productReviews.unshift(e.data);
+        console.log(this.globalService.productReviews)
         // this.onlyRate.unshift(e.data.rating);
         // this.productRate = this.onlyRate.reduce((a, b) => a + b, 0) / this.allReviews.length;
       }

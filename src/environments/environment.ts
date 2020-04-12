@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: "https://world.openfoodfacts.org/api/v0/product/"
+  api: "https://world.openfoodfacts.org/api/v0/product/",
+  search_api: "https://world.openfoodfacts.org/cgi/search.pl?search_terms="
 };
 
 /*
