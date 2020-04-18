@@ -5,35 +5,49 @@
             <ion-icon name="trash"></ion-icon>
         </ion-fab-button>
     </ion-fab>
-    <ion-card class="product" *ngFor="let d of data">
-        <ion-grid fixed>
-            <ion-row (click)="showProduct(d._id)">
-                <ion-col size="3" class="img-product">
-                    <img src="{{d.image_small_url}}" />
-                </ion-col>
-                <ion-col size="9">
-                    <ion-card-header>
-                        <ion-card-title>{{d.product_name}}</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <div class="nutri" *ngIf='d.nutrition_grades != undefined'>
-                            <img
-                                src="https://static.openfoodfacts.org/images/misc/nutriscore-{{d.nutrition_grades}}.svg" alt="nutrition"/>
-                            <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{d.nova_group}}.svg"
-                                alt="nova" style="margin-bottom:1rem;max-width:100%">
-                        </div>
-                        <div class="nutri" *ngIf='d.nutrition_grades === undefined' style="opacity: .5;">
-                            <img src="../../../assets/nutriscor.png"
-                              alt="nutri" />
-                            <img src="../../../assets/nova-group-4.png" alt="nova"
-                              style="margin-bottom:1rem;max-width:100%">
-                          </div>
-                    </ion-card-content>
-                </ion-col>
-                <!-- <ion-col size="2" style="display: flex; justify-content: center; align-items: center;">
-                    <ion-icon name="eye" style="color: var(--ion-color-primary); size: 12px"></ion-icon>
-                </ion-col> -->
-            </ion-row>
-        </ion-grid>
-    </ion-card>
+    <div class="content">
+        <ion-card class="product" *ngFor="let d of data">
+            <ion-grid fixed>
+                <ion-row (click)="showProduct(d._id)">
+                    <ion-col size="3" class="img-product">
+                        <img src="{{d.image_small_url}}" />
+                        <img src="../../../assets/logo-custplace.png" *ngIf="d.image_small_url === undefined" width="50"
+                            style="opacity: .3;">
+                    </ion-col>
+                    <ion-col size="9">
+                        <ion-card-header>
+                            <ion-card-title>{{d.product_name}}</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <div class="nutri">
+                                <div class="starRating">
+                                    <p>3.2</p>
+                                    <div class="stars">
+                                        <ion-icon slot="start" name="star" class="checked"></ion-icon>
+                                        <ion-icon slot="start" name="star" class="checked"></ion-icon>
+                                        <ion-icon slot="start" name="star" class="checked"></ion-icon>
+                                        <ion-icon slot="start" name="star" class="checked"></ion-icon>
+                                        <ion-icon slot="start" name="star"></ion-icon>
+                                    </div>
+                                    <p><small>(12)</small></p>
+                                </div>
+                                <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{d.nutrition_grades}}.svg"
+                                    *ngIf='d.nutrition_grades != undefined' />
+
+                                <img src="../../../assets/nutriscor.png" *ngIf='d.nutrition_grades === undefined'
+                                    style="opacity: .3;" />
+
+                                <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{d.nova_group}}.svg"
+                                    *ngIf='d.nova_group != undefined'>
+
+                                <img src="../../../assets/nova-group-4.png" *ngIf='d.nova_group === undefined'
+                                    style="opacity: .3;">
+                            </div>
+                        </ion-card-content>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+    </div>
+
 </ion-content>

@@ -1,4 +1,5 @@
-<ion-icon name="close-outline" (click)="close()" size="large" style="color: #fff; margin-left: auto; opacity: .8;"></ion-icon>
+<ion-icon name="close-outline" (click)="close()" size="large" style="color: #fff; margin-left: auto; opacity: .8;">
+</ion-icon>
 <div style="margin: auto 0;">
   <ion-card>
     <form [formGroup]='reviewForm'>
@@ -11,19 +12,26 @@
         <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Review</ion-label>
+        <ion-label position="floating">Description</ion-label>
         <ion-textarea formControlName="description"></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-label>Rate</ion-label>
-        <ion-range dualKnobs="false" min="1" max="5" snaps="true" color="warning" step="1" formControlName="rating">
-          <ion-label slot="start">1</ion-label>
-          <ion-label slot="end">5</ion-label>
-        </ion-range>
+        <ion-label>Score</ion-label>
+        <div class="rate">
+          <div class="stars">
+            <ion-icon slot="start" name="star" (click)="starmark(1)" [class]="stars[0] ? 'checked ios hydrated' : 'ios hydrated' "></ion-icon>
+            <ion-icon slot="start" name="star" (click)="starmark(2)" [class]="stars[1] ? 'checked ios hydrated' : 'ios hydrated' "></ion-icon>
+            <ion-icon slot="start" name="star" (click)="starmark(3)" [class]="stars[2] ? 'checked ios hydrated' : 'ios hydrated' "></ion-icon>
+            <ion-icon slot="start" name="star" (click)="starmark(4)" [class]="stars[3] ? 'checked ios hydrated' : 'ios hydrated' "></ion-icon>
+            <ion-icon slot="start" name="star" (click)="starmark(5)" [class]="stars[4] ? 'checked ios hydrated' : 'ios hydrated' "></ion-icon>
+          </div>
+        </div>
       </ion-item>
-      <ion-button [disabled]='!reviewForm.valid' (click)="submit()" expand="block" fill="clear" shape="round" type='submit'>
-        Envoyer
-      </ion-button>
+      <div style="display: flex; justify-content: center; background-color: var(--ion-color-warning);">
+        <ion-button [disabled]='!reviewForm.valid' (click)="submit()" type='submit' fill='clear' expand="block" color="light" style=" font-weight: 900;">
+          Envoyer
+        </ion-button>
+      </div>
     </form>
   </ion-card>
 </div>

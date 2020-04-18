@@ -15,12 +15,9 @@
         <ion-avatar>
           <h3>{{review.nom?.substring(0,1) | uppercase}}</h3>
         </ion-avatar>
-        <div class="stars">
-          <ion-icon slot="start" name="star" class="checked"></ion-icon>
-          <ion-icon slot="start" name="star" class="checked"></ion-icon>
-          <ion-icon slot="start" name="star" class="checked"></ion-icon>
-          <ion-icon slot="start" name="star" class="checked"></ion-icon>
-          <ion-icon slot="start" name="star"></ion-icon>
+        <div class="stars" *ngFor='let key of [1,2,3,4,5]'>
+          <ion-icon slot="start" name="star" id="{{key}}star" [ngClass]="{ 'checked': key <= review.rating}">
+          </ion-icon>
         </div>
       </ion-col>
       <ion-col size="9">
@@ -34,6 +31,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
- 
+
 
 </div>

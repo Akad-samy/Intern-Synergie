@@ -24,7 +24,9 @@ export class Tab4Page implements OnInit {
   ngOnInit() {}
 
   async ionViewWillEnter() {
-    const loading = await this.loadingController.create();
+    const loading = await this.loadingController.create({
+      mode: 'ios',
+    });
     await loading.present().then(() => {
       this.getStorageData();
     });
@@ -33,7 +35,9 @@ export class Tab4Page implements OnInit {
   getStorageData() {
     Storage.get({ key: 'historique' }).then((e) => {
       this.data = JSON.parse(e.value);
-      console.log('historique data: ' + this.data);
+      this.loadingController.dismiss();
+    }).catch(err => {
+      console.log(err);
       this.loadingController.dismiss();
     });
   }

@@ -1,5 +1,5 @@
 <ion-content>
-  <div class="home"  *ngIf="this.globalService.codebar === ''">
+  <div class="home" *ngIf="this.globalService.codebar === ''">
     <div>
       <ion-icon name="barcode-outline"></ion-icon>
       <p>Appuyez ici et scanner le codebar de Votre produit</p>
@@ -11,6 +11,8 @@
         <ion-row>
           <ion-col size="3" class="imgProduct">
             <img src="{{prod.image_small_url}}" />
+            <img src="../../../assets/logo-custplace.png" *ngIf="prod.image_small_url === undefined" width="50"
+              style="opacity: .3;">
           </ion-col>
           <ion-col size="9">
             <div style="float: right;z-index: 10; position: relative;">
@@ -21,26 +23,27 @@
               <ion-card-title>{{prod.product_name}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <div class="starRating"> 
-                <p>3.2</p>
-                <div class="stars">
-                  <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                  <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                  <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                  <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                  <ion-icon slot="start" name="star"></ion-icon>
+
+              <div class="nutri">
+                <div class="starRating">
+                  <p>{{this.globalService.moyenneScore}}</p>
+                  <div class="stars" *ngFor='let key of [1,2,3,4,5]'>
+                    <ion-icon slot="start" name="star" id="{{key}}star"
+                      [ngClass]="{ 'checked': key <= this.globalService.moyenneScore}">
+                    </ion-icon>
+                  </div>
+                  <p><small>({{this.globalService.productReviews.length}})</small></p>
                 </div>
-                <p><small>(12)</small></p>
-              </div>
-              <div class="nutri" *ngIf='prod.nutrition_grades != undefined'>
                 <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutrition_grades}}.svg"
-                  alt="nutri" />
-                <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg" alt="nova"
-                  style="margin-bottom:1rem;max-width:100%">
-              </div>
-              <div class="nutri" *ngIf='prod.nutrition_grades === undefined' style="opacity: .5;">
-                <img src="../../../assets/nutriscor.png" alt="nutri" />
-                <img src="../../../assets/nova-group-4.png" alt="nova" style="margin-bottom:1rem;max-width:100%">
+                  *ngIf='prod.nutrition_grades != undefined' />
+
+                <img src="../../../assets/nutriscor.png" *ngIf='prod.nutrition_grades === undefined'
+                  style="opacity: .3;" />
+
+                <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg"
+                  *ngIf='prod.nova_group != undefined'>
+
+                <img src="../../../assets/nova-group-4.png" *ngIf='prod.nova_group === undefined' style="opacity: .3;">
               </div>
             </ion-card-content>
           </ion-col>

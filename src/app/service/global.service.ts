@@ -9,6 +9,7 @@ export class GlobalService {
   productReviews = [];
   favoris = [];
   historique = [];
+  moyenneScore = 0;
 
   constructor() { }
 }
