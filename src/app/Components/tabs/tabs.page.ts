@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { GlobalService } from 'src/app/service/global.service';
 
 @Component({
@@ -10,12 +10,16 @@ import { GlobalService } from 'src/app/service/global.service';
 export class TabsPage {
   constructor(
     private barcodeScanner: BarcodeScanner,
-    public globalService: GlobalService
+    public globalService: GlobalService,
   ) {}
 
   searchCodebar() {
+    const options: BarcodeScannerOptions = {
+      prompt: 'Encadrez un code barres avec le viseur pour le balayer',
+    };
+
     this.barcodeScanner
-      .scan()
+      .scan(options)
       .then((barcodeData) => {
         this.globalService.codebar = barcodeData.text;
       })

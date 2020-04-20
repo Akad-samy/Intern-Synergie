@@ -12,4 +12,5 @@ export class GlobalService {
   moyenneScore = 0;
 
   constructor() { }
+  
 }

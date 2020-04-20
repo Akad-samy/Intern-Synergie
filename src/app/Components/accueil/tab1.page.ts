@@ -30,6 +30,7 @@ export class Tab1Page {
     });
     await loading.present().then(() => {
       this.getProduct();
+      this.checkProdInFavoris();
     });
   }
 
@@ -50,7 +51,6 @@ export class Tab1Page {
         if(e['code'] !== null) { // a default product with code = null, shows
           this.prod = e['product'];
           this.setStorageData(); // set in History
-          this.checkProdInFavoris();
         }
         this.loadingController.dismiss();
       },
@@ -154,15 +154,13 @@ export class Tab1Page {
         for (var i = 0; i < data.length; i++) {
           const Val = data[i];
           if (Val._id === this.globalService.codebar) {
-            this.inFavoris = true;
-          } else {
-            this.inFavoris = false;
+            this.inFavoris = true
           }
         }
       })
       .catch((err) => {
         console.log(err);
-        this.loadingController.dismiss();
-      });
+        this.loadingController.dismiss()
+      })
   }
 }
