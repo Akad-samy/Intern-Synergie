@@ -145,6 +145,7 @@ export class Tab1Page {
   }
 
   checkProdInFavoris() {
+    this.inFavoris = false;
     Storage.get({ key: 'favoris' })
       .then((e) => {
         const data = JSON.parse(e.value);
