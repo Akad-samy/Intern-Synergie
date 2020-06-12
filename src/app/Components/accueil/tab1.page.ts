@@ -3,6 +3,8 @@ import { ApiService } from 'src/app/service/api.service';
 import { GlobalService } from 'src/app/service/global.service';
 import { Plugins } from '@capacitor/core';
 import { LoadingController, AlertController } from '@ionic/angular';
+import { BarcodeScannerOptions, BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Router } from '@angular/router';
 
 const { Storage } = Plugins;
 @Component({
@@ -11,7 +13,7 @@ const { Storage } = Plugins;
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
-  // codeBar = '3116430208941'; // 3116430208941 // 3045140105502  // 7622210204424
+  // codeBar = '3600541982109'; // 3116430208941 // 3045140105502  // 7622210204424
   prod = '';
   inFavoris = false;
   danger = 'var(--ion-color-danger)';
@@ -20,8 +22,10 @@ export class Tab1Page {
   constructor(
     private apiService: ApiService,
     public globalService: GlobalService,
-    public loadingController: LoadingController,
-    public alertController: AlertController
+    private loadingController: LoadingController,
+    private alertController: AlertController,
+    private barcodeScanner: BarcodeScanner,
+    private router: Router,
   ) {}
 
   async ionViewWillEnter() {
@@ -39,7 +43,9 @@ export class Tab1Page {
   getProduct() {
     this.apiService.getData(this.globalService.codebar).subscribe(
       async (e) => {
-        if (e['status'] === 0) { // product not found
+        console.log(e)
+        if (e['status_verbose'] === "product not found") { // product not found
+          this.router.navigateByUrl(`/tabs/tab1`);
           const alert = await this.alertController.create({
             header: 'Custplace',
             message: 'Produit non trouver! ',
@@ -145,23 +151,31 @@ export class Tab1Page {
   }
 
   checkProdInFavoris() {
-    this.inFavoris = false;
     Storage.get({ key: 'favoris' })
       .then((e) => {
         const data = JSON.parse(e.value);
         if (data == null) {
           return;
         }
-        for (var i = 0; i < data.length; i++) {
-          const Val = data[i];
-          if (Val._id === this.globalService.codebar) {
-            this.inFavoris = true
-          }
-        }
+        this.inFavoris = data.filter(prod => prod._id === this.globalService.codebar).length > 0;
       })
       .catch((err) => {
         console.log(err);
-        this.loadingController.dismiss()
       })
+  }
+
+  searchCodebar() {
+    const options: BarcodeScannerOptions = {
+      prompt: 'Encadrez un code barres avec le viseur pour le balayer',
+    };
+
+    this.barcodeScanner
+      .scan(options)
+      .then((barcodeData) => {
+        this.globalService.codebar = barcodeData.text;
+      })
+      .catch((err) => {
+        console.log('Error', err);
+      });
   }
 }

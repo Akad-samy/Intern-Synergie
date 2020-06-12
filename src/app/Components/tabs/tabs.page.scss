@@ -7,12 +7,15 @@ ion-tabs ion-tab-bar ion-tab-button {
     background: #114e6b;
 }
 ion-content {
-    // margin-bottom: 2rem;
+    // margin-bottom: 2rem ;
 }
 
-ion-fab-button {
-    width: 4rem !important;
-    height: 4rem !important;
+ion-fab {
+    position: fixed;
+    ion-fab-button {
+        width: 4rem !important;
+        height: 4rem !important;
+    }
 }
 
 
