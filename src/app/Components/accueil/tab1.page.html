@@ -13,7 +13,7 @@
           <ion-row>
             <ion-col size="3" class="imgProduct">
               <img src="{{image}}" />
-              <img src="../../../assets/logo-custplace.png" *ngIf="data.image === ''" width="50"
+              <img src="../../../assets/logo-custplace.png" *ngIf="image === 'https://degrassi-crown-08212.herokuapp.com/images/products'" width="50"
                 style="opacity: .3;">
             </ion-col>
             <ion-col size="9">
@@ -43,7 +43,7 @@
                     style="opacity: .3;" />
   
                   <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{data.nova_group}}.svg"
-                    *ngIf='data.nova_group != null'>
+                    *ngIf='data.nova_group != ""'>
   
                   <img src="../../../assets/nova-group-4.png" *ngIf='data.nova_group === ""' style="opacity: .3;">
                 </div>

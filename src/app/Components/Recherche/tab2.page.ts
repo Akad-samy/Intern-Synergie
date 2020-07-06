@@ -39,10 +39,15 @@ export class tab2Page {
     private alertController: AlertController
   ) {}
 
+  // ngOnChanges() {
+  //   this.prods = [];
+  //   this.page = 1;
+  //   this.getProduct()
+  // }
   
 
-  async ngOnInit() {
-    // this.getProduct()
+  ngOnInit() {
+    this.getProduct()
   }
 
   ionViewWillEnter() {
@@ -108,7 +113,7 @@ export class tab2Page {
 
   nextPage(event) {
     ++this.page;
-    console.log(this.page);
+    console.log(this.page + ' produit: ' + this.myInput);
     this.getProduct()
     if(this.page == this.maxPage) {
       event.target.disabled = true;

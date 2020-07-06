@@ -31,6 +31,7 @@ export class Tab5Page implements OnInit {
     Storage.get({ key: 'favoris' }).then((e) => {
       this.favoris = JSON.parse(e.value);
 
+      console.log(this.favoris)
       this.favoris.forEach(produit => {
         if(produit.image.startsWith('/')){
           this.image = 'https://degrassi-crown-08212.herokuapp.com/images/products' + produit.image;
@@ -38,6 +39,8 @@ export class Tab5Page implements OnInit {
           this.image = produit.image;
         }
       });
+      
+      console.log(this.image)
     });
   }
 

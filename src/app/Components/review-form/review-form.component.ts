@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/service/global.service';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-review-form',
@@ -33,7 +34,7 @@ export class ReviewFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private globalService: GlobalService,
     private apiService: ApiService,
-    private toast: ToastController
+    private toast: ToastController,
   ) {}
 
   ngOnInit() {}
