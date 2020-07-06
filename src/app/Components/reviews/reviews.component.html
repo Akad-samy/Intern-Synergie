@@ -2,35 +2,64 @@
   <h3>Avis</h3>
   <ion-icon class="text" name="chatbox-ellipses-outline" (click)="addReview()"></ion-icon>
 </div>
-<div style="text-align: center;padding: 1rem;" *ngIf="this.globalService.productReviews.length === 0">
+<div style="text-align: center;padding: 1rem;" *ngIf="reviews.length === 0">
   <ion-label>
     <p>Appuyez sur <ion-icon class="text" name="chatbox-ellipses-outline"></ion-icon> pour ajouter votre avis</p>
   </ion-label>
 </div>
 
-<div class="reviews" *ngIf="this.globalService.productReviews.length != 0">
-  <ion-grid fixed>
-    <ion-row *ngFor="let review of globalService.productReviews">
-      <ion-col size="3" style="text-align: center;">
-        <ion-avatar>
-          <h3>{{review.nom?.substring(0,1) | uppercase}}</h3>
-        </ion-avatar>
-        <div class="stars" *ngFor='let key of [1,2,3,4,5]'>
-          <ion-icon slot="start" name="star" id="{{key}}star" [ngClass]="{ 'checked': key <= review.rating}">
-          </ion-icon>
-        </div>
-      </ion-col>
-      <ion-col size="9">
-        <ion-label>
-          <div style="display: flex; justify-content: space-between;">
-            <h2>{{review.nom}}</h2>
-            <p><small>6/04/2020 11:30</small></p>
+<div class="reviews" *ngIf="reviews.length != 0">
+  <div *ngIf="!skeleton">
+    <ion-grid fixed>
+      <ion-row *ngFor="let review of reviews">
+        <ion-col size="3" style="text-align: center;">
+          <ion-avatar>
+            <h3>{{review.user['first_name']?.substring(0,1) | uppercase}}</h3>
+          </ion-avatar>
+          <div class="stars" *ngFor='let key of [1,2,3,4,5]'>
+            <ion-icon slot="start" name="star" id="{{key}}star" [ngClass]="{ 'checked': key <= review.rate}">
+            </ion-icon>
           </div>
-          <p>{{review.description}}</p>
-        </ion-label>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        </ion-col>
+        <ion-col size="9">
+          <ion-label>
+            <div style="display: flex; justify-content: space-between;">
+              <h2>{{review.user['first_name']}}</h2>
+              <p><small>{{review.published_at}}</small></p>
+            </div>
+            <p>{{review.comment}}</p>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-button (click)="nextPage($event)" expand="block" fill="clear" shape="round">
+        Afficher Plus
+      </ion-button>
+      <!-- <ion-infinite-scroll threshold="100px" id="infinite-scroll" (ionInfinite)="nextPage($event)">
+          <ion-infinite-scroll-content loadingSpinner="circles">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll> -->
+    </ion-grid>
+  </div>
 
+  <!-- skeleton -->
+  <div *ngIf="skeleton">
+    <ion-card *ngFor="let item of [].constructor(3)">
+      <ion-list>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
 
 </div>

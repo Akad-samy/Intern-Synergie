@@ -5,7 +5,11 @@
     <form [formGroup]='reviewForm'>
       <ion-item>
         <ion-label position="floating">Nom</ion-label>
-        <ion-input type="text" formControlName="nom"></ion-input>
+        <ion-input type="text" formControlName="last_name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Prenom</ion-label>
+        <ion-input type="text" formControlName="first_name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
@@ -13,9 +17,9 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Description</ion-label>
-        <ion-textarea formControlName="description"></ion-textarea>
+        <ion-textarea formControlName="comment"></ion-textarea>
       </ion-item>
-      <ion-item>
+      <ion-item> 
         <ion-label>Score</ion-label>
         <div class="rate">
           <div class="stars">

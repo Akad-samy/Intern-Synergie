@@ -1,50 +1,74 @@
 <ion-content>
     <h3 class="title">Favoris</h3>
-    <ion-card class="product" *ngFor="let favory of favoris">
-        <ion-grid fixed>
-            <ion-row (click)="showProduct(favory._id)">
-                <ion-col size="3" class="img-product">
-                    <img src="{{favory.image_small_url}}" />
-                    <img src="../../../assets/logo-custplace.png" *ngIf="favory.image_small_url === undefined" width="50"
-                        style="opacity: .3;">
-                </ion-col>
-                <ion-col size="7">
-                    <ion-card-header>
-                        <ion-card-title>{{favory.product_name}}</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <div class="nutri">
-                            <div class="starRating">
-                                <p>3.2</p>
-                                <div class="stars">
-                                    <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                                    <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                                    <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                                    <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                                    <ion-icon slot="start" name="star"></ion-icon>
+    <div *ngIf="!skeleton">
+        <ion-card class="product" *ngFor="let favory of favoris">
+            <ion-grid fixed>
+                <ion-row (click)="showProduct(favory.codebar)">
+                    <ion-col size="3" class="img-product">
+                        <img src="{{image}}" />
+                        <img src="../../../assets/logo-custplace.png" *ngIf="favory.image === ''" width="50"
+                            style="opacity: .3;">
+                    </ion-col>
+                    <ion-col size="7">
+                        <ion-card-header>
+                            <ion-card-title>{{favory.title}}</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <div class="nutri">
+                                <div class="starRating">
+                                    <p>{{favory.average_rate}}</p>
+                                    <div class="stars" *ngFor='let key of [1,2,3,4,5]'>
+                                        <ion-icon slot="start" name="star" id="{{key}}star"
+                                            [ngClass]="{ 'checked': key <= favory.average_rate}">
+                                        </ion-icon>
+                                    </div>
+                                    <p><small>({{favory.total_reviews}})</small></p>
                                 </div>
-                                <p><small>(12)</small></p>
+                                <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{favory.nutri_score}}.svg"
+                                    *ngIf='favory.nutri_score != ""' />
+    
+                                <img src="../../../assets/nutriscor.png" *ngIf='favory.nutri_score === ""'
+                                    style="opacity: .3;" />
+    
+                                <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{favory.nova_group}}.svg"
+                                    *ngIf='favory.nova_group != ""'>
+    
+                                <img src="../../../assets/nova-group-4.png" *ngIf='favory.nova_group === ""'
+                                    style="opacity: .3;">
                             </div>
-                            <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{favory.nutrition_grades}}.svg"
-                                *ngIf='favory.nutrition_grades != undefined' />
+                        </ion-card-content>
+                    </ion-col>
+                    <ion-col size="2" style="display: flex; justify-content: center; align-items: center;">
+                        <ion-icon (click)="removeProduct(favory.codebar)" name="trash"
+                            style="color: #fff; background-color: var(--ion-color-danger); padding: 3px; border-radius: 5px; margin: 0 .3rem">
+                        </ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+    </div>
 
-                            <img src="../../../assets/nutriscor.png" *ngIf='favory.nutrition_grades === undefined'
-                                style="opacity: .3;" />
-
-                            <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{favory.nova_group}}.svg"
-                                *ngIf='favory.nova_group != undefined'>
-
-                            <img src="../../../assets/nova-group-4.png" *ngIf='favory.nova_group === undefined'
-                                style="opacity: .3;">
-                        </div>
-                    </ion-card-content>
-                </ion-col>
-                <ion-col size="2" style="display: flex; justify-content: center; align-items: center;">
-                    <ion-icon (click)="removeProduct(favory._id)" name="trash"
-                        style="color: #fff; background-color: var(--ion-color-danger); padding: 3px; border-radius: 5px; margin: 0 .3rem">
-                    </ion-icon>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-card>
+          <!-- skeleton -->
+    <div *ngIf="skeleton">
+        <ion-card *ngFor="let item of [].constructor(3)">
+          <ion-list>
+            <ion-item>
+              <ion-thumbnail slot="start">
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-thumbnail>
+              <ion-label>
+                <h3>
+                  <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                </h3>
+                <p>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                </p>
+                <p>
+                  <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+    </div>
 </ion-content>

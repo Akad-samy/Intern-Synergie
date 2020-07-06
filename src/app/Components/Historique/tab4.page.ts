@@ -13,6 +13,8 @@ const { Storage } = Plugins;
 })
 export class Tab4Page implements OnInit {
   data = [];
+  skeleton ;
+  image;
 
   constructor(
     public globalService: GlobalService,
@@ -21,22 +23,34 @@ export class Tab4Page implements OnInit {
     public alertController: AlertController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getStorageData();
+  }
 
   async ionViewWillEnter() {
-    const loading = await this.loadingController.create({
-      mode: 'ios',
-    });
-    await loading.present().then(() => {
-      this.getStorageData();
-    });
+    // const loading = await this.loadingController.create({
+    //   mode: 'ios',
+    // });
+    // await loading.present().then(() => {
+    //   this.getStorageData();
+    // });
   }
 
   getStorageData() {
+    this.skeleton = true;
     Storage.get({ key: 'historique' }).then((e) => {
+      this.skeleton = false;
       this.data = JSON.parse(e.value);
+      this.data.forEach(produit => {
+        if(produit.image.startsWith('/')){
+          this.image = 'https://degrassi-crown-08212.herokuapp.com/images/products' + produit.image;
+        }else {
+          this.image = produit.image;
+        }
+      });
       this.loadingController.dismiss();
     }).catch(err => {
+      this.skeleton = false;
       console.log(err);
       this.loadingController.dismiss();
     });

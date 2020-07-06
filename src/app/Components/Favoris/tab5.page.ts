@@ -12,6 +12,8 @@ const { Storage } = Plugins;
 })
 export class Tab5Page implements OnInit {
   favoris = [];
+  image;
+  skeleton
 
   constructor(
     private router: Router,
@@ -19,23 +21,23 @@ export class Tab5Page implements OnInit {
     public globalService: GlobalService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {} 
 
   async ionViewWillEnter() {
-    const loading = await this.loadingController.create({
-      mode: 'ios',
-    });
-    await loading.present().then(() => {
       this.getStorageData();
-    })
   }
 
   getStorageData() {
     Storage.get({ key: 'favoris' }).then((e) => {
       this.favoris = JSON.parse(e.value);
-      if (this.loadingController.create()) {
-        this.loadingController.dismiss();
-      }
+
+      this.favoris.forEach(produit => {
+        if(produit.image.startsWith('/')){
+          this.image = 'https://degrassi-crown-08212.herokuapp.com/images/products' + produit.image;
+        }else {
+          this.image = produit.image;
+        }
+      });
     });
   }
 
@@ -51,7 +53,7 @@ export class Tab5Page implements OnInit {
       for (var i = 0; i < data.length; i++) {
         var Val = data[i];
 
-        if (Val._id === id) {
+        if (Val.codebar === id) {
           data.splice(i, 1);
         }
       }
@@ -69,7 +71,6 @@ export class Tab5Page implements OnInit {
         this.getStorageData();
     }).catch(err => {
       console.log(err);
-      this.loadingController.dismiss();
     });
   }
 }

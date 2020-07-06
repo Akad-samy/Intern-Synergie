@@ -25,6 +25,12 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class tab2Page {
   prods = [];
   myInput = '';
+  pageSize = 10;
+  page = 1;
+  maxPage;
+  skeleton = true;
+  image = '';
+
   constructor(
     private apiService: ApiService,
     public globalService: GlobalService,
@@ -33,15 +39,10 @@ export class tab2Page {
     private alertController: AlertController
   ) {}
 
+  
+
   async ngOnInit() {
-    const loading = await this.loadingController.create({
-      mode: 'ios',
-    });
-    await loading.present().then(() => {
-      this.getProduct();
-    }).catch((err) => {
-      console.log(err)
-    });
+    // this.getProduct()
   }
 
   ionViewWillEnter() {
@@ -49,36 +50,53 @@ export class tab2Page {
   }
 
   async getProduct() {
+    
+    this.skeleton = true;
     if (this.myInput === undefined || this.myInput.match('.*\b[0-9]\b')){
-
+      // this.loadingController.dismiss();
+      this.skeleton = false;
       const alert = await this.alertController.create({
         header: 'Custplace',
-        message: 'Veuiilez entrer le nom d\'un produit! ',
+        message: 'Veuillez entrer le nom d\'un produit! ',
         buttons: ['OK'],
         mode: 'ios'
       });
       await alert.present();
 
+
     } else {
-      this.apiService.searchProductByName(this.myInput).subscribe(async (e) => {
-          // console.log(e)
-          if (e['count'] === 0) {  // product not found
-            const alert = await this.alertController.create({
-              header: 'Custplace',
-              message: 'Produit non trouver! ',
-              buttons: ['OK'],
-              mode: 'ios'
+      this.apiService.dataByTitle(this.myInput, this.pageSize, this.page).subscribe(async (e) => {
+          console.log(e)
+          this.skeleton = false;
+          if(e['status'] === 1) {
+            // if(this.myInput != ''){
+            //   this.prods = []
+            // }
+            this.prods = this.prods.concat(e['data']);
+            this.maxPage = e['pagination'].total_pages;
+            console.log(this.prods)
+            e['data'].forEach(produit => {
+              if(produit.image.startsWith('/')){
+                this.image = 'https://degrassi-crown-08212.herokuapp.com/images/products' + produit.image;
+              }else {
+                this.image = produit.image;
+              }
             });
-            await alert.present();
-          } else {
-            this.prods = e['products'];
+            
+          }else {
+            const alert = await this.alertController.create({
+                  header: 'Custplace',
+                  message: 'Produit non trouver! ',
+                  buttons: ['OK'],
+                  mode: 'ios'
+                });
+                await alert.present();
           }
-          console.log(this.prods)
-          this.loadingController.dismiss();
-          this.myInput = '';
+          // this.loadingController.dismiss();
+          // this.myInput = '';
       }, err => {
         console.log(err);
-        this.loadingController.dismiss();
+        // this.loadingController.dismiss();
       })
     }
   }
@@ -86,5 +104,14 @@ export class tab2Page {
   showProduct(id) {
     this.globalService.codebar = id;
     this.router.navigateByUrl(`/tabs/tab1`);
+  }
+
+  nextPage(event) {
+    ++this.page;
+    console.log(this.page);
+    this.getProduct()
+    if(this.page == this.maxPage) {
+      event.target.disabled = true;
+    }
   }
 }

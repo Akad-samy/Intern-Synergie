@@ -1,3 +1,4 @@
+import { ReviewsComponent } from './../reviews/reviews.component';
 import { Component } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { GlobalService } from 'src/app/service/global.service';
@@ -14,10 +15,12 @@ const { Storage } = Plugins;
 })
 export class Tab1Page {
   // codeBar = '3600541982109'; // 3116430208941 // 3045140105502  // 7622210204424
-  prod = '';
+  data = '';
+  image = '';
   inFavoris = false;
   danger = 'var(--ion-color-danger)';
   medium = 'var(--ion-color-medium)';
+  skeleton;
 
   constructor(
     private apiService: ApiService,
@@ -28,23 +31,34 @@ export class Tab1Page {
     private router: Router,
   ) {}
 
-  async ionViewWillEnter() {
-    const loading = await this.loadingController.create({
-      mode: 'ios',
-    });
-    await loading.present().then(() => {
+  ionViewWillEnter() {
       this.getProduct();
       this.checkProdInFavoris();
-    });
   }
 
   // get product from codebar
 
   getProduct() {
-    this.apiService.getData(this.globalService.codebar).subscribe(
+    this.skeleton = true;
+    this.apiService.dataByBarcode(this.globalService.codebar).subscribe(
       async (e) => {
+        this.skeleton = false
         console.log(e)
-        if (e['status_verbose'] === "product not found") { // product not found
+        if(e['status'] === 1) { // product is found
+
+          this.data = e['data'];
+
+          if(e['data'].image.startsWith('/')){ // image
+            this.image = 'https://degrassi-crown-08212.herokuapp.com/images/products' + e['data'].image;
+          }else {
+            this.image = e['data'].image;
+          }
+
+          
+
+          this.setStorageData(); // set in History
+
+        }else { // product not found
           this.router.navigateByUrl(`/tabs/tab1`);
           const alert = await this.alertController.create({
             header: 'Custplace',
@@ -54,15 +68,10 @@ export class Tab1Page {
           });
           await alert.present();
         }
-        if(e['code'] !== null) { // a default product with code = null, shows
-          this.prod = e['product'];
-          this.setStorageData(); // set in History
-        }
-        this.loadingController.dismiss();
       },
       (err) => {
         console.log(err);
-        this.loadingController.dismiss();
+        this.skeleton = false
       }
     );
   }
@@ -72,17 +81,17 @@ export class Tab1Page {
 
     Storage.get({ key: 'historique' })
       .then((e) => {
-        var data = JSON.parse(e.value);
-        if (data === null) { //if no data exist in history
-          data = [this.prod];
+        var historique = JSON.parse(e.value);
+        if (historique === null) { //if no data exist in history
+          historique = [this.data];
         } else {
-          data.unshift(this.prod);
+          historique.unshift(this.data);
         }
 
         // Remove duplicated products
 
-        this.globalService.historique = data.reduce((acc, current) => {
-          const x = acc.find((item) => item._id === current._id);
+        this.globalService.historique = historique.reduce((acc, current) => {
+          const x = acc.find((item) => item.codebar === current.codebar);
           if (!x) {
             return acc.concat([current]);
           } else {
@@ -105,24 +114,23 @@ export class Tab1Page {
       })
       .catch((err) => {
         console.log(err);
-        this.loadingController.dismiss();
       });
   }
 
   addFavoris() {
     Storage.get({ key: 'favoris' })
       .then((e) => {
-        var data = JSON.parse(e.value);
-        if (data === null) {
-          data = [this.prod];
+        var favoris = JSON.parse(e.value);
+        if (favoris === null) {
+          favoris = [this.data];
         } else {
-          data.unshift(this.prod);
+          favoris.unshift(this.data);
         }
-
+        console.log(favoris);
         // Remove duplicated products
 
-        this.globalService.favoris = data.reduce((acc, current) => {
-          const x = acc.find((item) => item._id === current._id);
+        this.globalService.favoris = favoris.reduce((acc, current) => {
+          const x = acc.find((item) => item.codebar === current.codebar);
           if (!x) {
             return acc.concat([current]);
           } else {
@@ -145,7 +153,6 @@ export class Tab1Page {
       })
       .catch((err) => {
         console.log(err);
-        this.loadingController.dismiss();
       });
     this.inFavoris = true;
   }
@@ -153,11 +160,11 @@ export class Tab1Page {
   checkProdInFavoris() {
     Storage.get({ key: 'favoris' })
       .then((e) => {
-        const data = JSON.parse(e.value);
-        if (data == null) {
+        const favoris = JSON.parse(e.value);
+        if (favoris == null) {
           return;
         }
-        this.inFavoris = data.filter(prod => prod._id === this.globalService.codebar).length > 0;
+        this.inFavoris = favoris.filter(prod => prod.codebar === this.globalService.codebar).length > 0;
       })
       .catch((err) => {
         console.log(err);

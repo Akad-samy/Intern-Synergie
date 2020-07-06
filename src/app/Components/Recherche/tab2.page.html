@@ -3,12 +3,12 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col [size]="myInput === '' ? 12 : 10">
-        <ion-input type="text" mode='md' [(ngModel)]="myInput" placeholder="Nom du Produit" pattern="[a-zA-Z]"></ion-input>
+        <ion-input type="text" mode='md' [(ngModel)]="myInput" placeholder="Nom du Produit"></ion-input>
       </ion-col>
       <ion-col size="2" *ngIf="myInput != ''">
         <!-- <ion-icon slot="start" name="search" style="background-color: #fff; color: #fff;"></ion-icon> -->
         <ion-button @itemState (click)="getProduct($event)" color="warning" mode="md" [hidden]="myInput === '' ">
-          <ion-icon slot="start" name="search" mode='ios'></ion-icon> 
+          <ion-icon slot="start" name="search" mode='ios'></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
@@ -20,46 +20,74 @@
 
   </div> -->
   <div class="results">
-    <ion-card class="product" *ngFor="let prod of prods">
-      <ion-grid fixed>
-        <ion-row (click)="showProduct(prod._id)">
-          <ion-col size="3" class="img-product">
-            <img src="{{prod.image_small_url}}" />
-            <img src="../../../assets/logo-custplace.png" *ngIf="prod.image_small_url === undefined" width="50"
-              style="opacity: .3;">
-          </ion-col>
-          <ion-col size="9">
-            <ion-card-header>
-              <ion-card-title>{{prod.product_name}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <div class="nutri">
-                <div class="starRating">
-                  <p>3.2</p>
-                  <div class="stars">
-                    <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                    <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                    <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                    <ion-icon slot="start" name="star" class="checked"></ion-icon>
-                    <ion-icon slot="start" name="star"></ion-icon>
+    <div *ngIf="!skeleton">
+      <ion-card class="product" *ngFor="let prod of prods">
+        <ion-grid fixed>
+          <ion-row (click)="showProduct(prod.codebar)">
+            <ion-col size="3" class="img-product">
+              <img src="{{image}}" />
+              <img src="../../../assets/logo-custplace.png" *ngIf="prod.image === ''" width="50"
+                style="opacity: .3;">
+            </ion-col>
+            <ion-col size="9">
+              <ion-card-header>
+                <ion-card-title>{{prod.title}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="nutri">
+                  <div class="starRating">
+                    <p>{{prod.average_rate}}</p>
+                    <div class="stars" *ngFor='let key of [1,2,3,4,5]'>
+                      <ion-icon slot="start" name="star" id="{{key}}star"
+                        [ngClass]="{ 'checked': key <= prod.average_rate}">
+                      </ion-icon>
+                    </div>
+                    <p><small>({{prod.total_reviews}})</small></p>
                   </div>
-                  <p><small>(12)</small></p>
+                  <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutri_score}}.svg"
+                    *ngIf='prod.nutri_score != ""' />
+  
+                  <img src="../../../assets/nutriscor.png" *ngIf='prod.nutri_score === ""' style="opacity: .3;" />
+  
+                  <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg"
+                    *ngIf='prod.nova_group != ""'>
+  
+                  <img src="../../../assets/nova-group-4.png" *ngIf='prod.nova_group === ""' style="opacity: .3;">
                 </div>
-                <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutrition_grades}}.svg"
-                  *ngIf='prod.nutrition_grades != undefined' />
+              </ion-card-content>
+  
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
 
-                <img src="../../../assets/nutriscor.png" *ngIf='prod.nutrition_grades === undefined'
-                  style="opacity: .3;" />
+    <!-- skeleton -->
+    <div *ngIf="skeleton">
+      <ion-card *ngFor="let item of [].constructor(5)">
+        <ion-list>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </div>
 
-                <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg"
-                  *ngIf='prod.nova_group != undefined'>
-
-                <img src="../../../assets/nova-group-4.png" *ngIf='prod.nova_group === undefined' style="opacity: .3;">
-              </div>
-            </ion-card-content>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
+    <ion-button (click)="nextPage($event)" expand="block" fill="clear" shape="round">
+      Afficher Plus
+    </ion-button>
   </div>
 </ion-content>

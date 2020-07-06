@@ -5,11 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
 
-  codebar = '';
-  productReviews = [];
+  codebar = ''//'5053990119004'//'3017620422003';
   favoris = [];
   historique = [];
-  moyenneScore = 0;
 
   constructor() { }
   
