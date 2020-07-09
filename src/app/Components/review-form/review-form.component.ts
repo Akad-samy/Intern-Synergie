@@ -48,8 +48,7 @@ export class ReviewFormComponent implements OnInit {
     this.apiService.postReview(this.globalService.codebar, this.reviewForm.value).subscribe((e) => {
       console.warn(e)
     });
-    // this.reviews.showReviews();
-    this.modalController.dismiss();
+    this.modalController.dismiss(this.reviewForm.value);
     this.toast.create({
       message: 'Votre commentaire a été ajouter avec succee !',
       duration: 2000,

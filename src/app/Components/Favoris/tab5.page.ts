@@ -32,13 +32,13 @@ export class Tab5Page implements OnInit {
       this.favoris = JSON.parse(e.value);
 
       console.log(this.favoris)
-      this.favoris.forEach(produit => {
-        if(produit.image.startsWith('/')){
-          this.image = 'https://degrassi-crown-08212.herokuapp.com/images/products' + produit.image;
-        }else {
-          this.image = produit.image;
-        }
-      });
+      // this.favoris.forEach(produit => {
+      //   if(produit.image.startsWith('/')){
+      //     this.image = 'https://degrassi-crown-08212.herokuapp.com/images/products' + produit.image;
+      //   }else {
+      //     this.image = produit.image;
+      //   }
+      // });
       
       console.log(this.image)
     });

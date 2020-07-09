@@ -11,8 +11,8 @@
                 <ion-grid fixed>
                     <ion-row (click)="showProduct(d.codebar)">
                         <ion-col size="3" class="img-product">
-                            <img src="{{image}}" />
-                            <img src="../../../assets/logo-custplace.png" *ngIf="d.image === ''" width="50"
+                            <img src="{{d.image}}" />
+                            <img src="../../../assets/logo-custplace.png" *ngIf="d.image === null" width="50"
                                 style="opacity: .3;">
                         </ion-col>
                         <ion-col size="9">
@@ -31,15 +31,15 @@
                                         <p><small>({{d.total_reviews}})</small></p>
                                     </div>
                                     <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{d.nutri_score}}.svg"
-                                        *ngIf='d.nutri_score != ""' />
+                                        *ngIf='d.nutri_score != null' />
     
-                                    <img src="../../../assets/nutriscor.png" *ngIf='d.nutri_score === ""'
+                                    <img src="../../../assets/nutriscor.png" *ngIf='d.nutri_score === null'
                                         style="opacity: .3;" />
     
                                     <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{d.nova_group}}.svg"
-                                        *ngIf='d.nova_group != ""'>
+                                        *ngIf='d.nova_group != null'>
     
-                                    <img src="../../../assets/nova-group-4.png" *ngIf='d.nova_group === ""'
+                                    <img src="../../../assets/nova-group-4.png" *ngIf='d.nova_group === null'
                                         style="opacity: .3;">
                                 </div>
                             </ion-card-content>

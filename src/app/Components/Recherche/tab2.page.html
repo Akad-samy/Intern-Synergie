@@ -3,7 +3,7 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col [size]="myInput === '' ? 12 : 10">
-        <ion-input type="text" mode='md' [(ngModel)]="myInput" placeholder="Nom du Produit"></ion-input>
+        <ion-input type="text" mode='md' [(ngModel)]="myInput" (ionChange)='onChangeTime($event.target.value)' placeholder="Nom du Produit"></ion-input>
       </ion-col>
       <ion-col size="2" *ngIf="myInput != ''">
         <!-- <ion-icon slot="start" name="search" style="background-color: #fff; color: #fff;"></ion-icon> -->
@@ -25,8 +25,8 @@
         <ion-grid fixed>
           <ion-row (click)="showProduct(prod.codebar)">
             <ion-col size="3" class="img-product">
-              <img src="{{image}}" />
-              <img src="../../../assets/logo-custplace.png" *ngIf="prod.image === ''" width="50"
+              <img src="{{prod.image}}" />
+              <img src="../../../assets/logo-custplace.png" *ngIf="prod.image === null" width="50"
                 style="opacity: .3;">
             </ion-col>
             <ion-col size="9">
@@ -45,14 +45,14 @@
                     <p><small>({{prod.total_reviews}})</small></p>
                   </div>
                   <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{prod.nutri_score}}.svg"
-                    *ngIf='prod.nutri_score != ""' />
+                    *ngIf='prod.nutri_score != null' />
   
-                  <img src="../../../assets/nutriscor.png" *ngIf='prod.nutri_score === ""' style="opacity: .3;" />
+                  <img src="../../../assets/nutriscor.png" *ngIf='prod.nutri_score === null' style="opacity: .3;" />
   
                   <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{prod.nova_group}}.svg"
-                    *ngIf='prod.nova_group != ""'>
+                    *ngIf='prod.nova_group != null'>
   
-                  <img src="../../../assets/nova-group-4.png" *ngIf='prod.nova_group === ""' style="opacity: .3;">
+                  <img src="../../../assets/nova-group-4.png" *ngIf='prod.nova_group === null' style="opacity: .3;">
                 </div>
               </ion-card-content>
   

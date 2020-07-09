@@ -9,7 +9,6 @@
 </div>
 
 <div class="reviews" *ngIf="reviews.length != 0">
-  <div *ngIf="!skeleton">
     <ion-grid fixed>
       <ion-row *ngFor="let review of reviews">
         <ion-col size="3" style="text-align: center;">
@@ -39,27 +38,5 @@
           </ion-infinite-scroll-content>
         </ion-infinite-scroll> -->
     </ion-grid>
-  </div>
-
-  <!-- skeleton -->
-  <div *ngIf="skeleton">
-    <ion-card *ngFor="let item of [].constructor(3)">
-      <ion-list>
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <ion-skeleton-text animated></ion-skeleton-text>
-          </ion-thumbnail>
-          <ion-label>
-            <h3>
-              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-            </h3>
-            <p>
-              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-            </p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-  </div>
 
 </div>

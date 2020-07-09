@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 import { ReviewFormComponent } from './Components/review-form/review-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Tab1Page } from './Components/accueil/tab1.page';
+import { ReviewsComponent } from './Components/reviews/reviews.component';
 
 @NgModule({
   declarations: [AppComponent, ReviewFormComponent],
@@ -29,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     StatusBar,
     SplashScreen,
     BarcodeScanner,
+    Tab1Page,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

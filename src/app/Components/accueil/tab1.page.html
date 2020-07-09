@@ -6,14 +6,14 @@
     </div>
   </div>
   
-  <div *ngIf="this.globalService.codebar != ''">
+  <div *ngIf="globalService.codebar != ''">
     <div *ngIf="!skeleton">
       <ion-card class="product">
         <ion-grid fixed>
           <ion-row>
             <ion-col size="3" class="imgProduct">
-              <img src="{{image}}" />
-              <img src="../../../assets/logo-custplace.png" *ngIf="image === 'https://degrassi-crown-08212.herokuapp.com/images/products'" width="50"
+              <img src="{{data.image}}" />
+              <img src="../../../assets/logo-custplace.png" *ngIf="data.image === null" width="50"
                 style="opacity: .3;">
             </ion-col>
             <ion-col size="9">
@@ -37,15 +37,15 @@
                     <p><small>({{data.total_reviews}})</small></p>
                   </div>
                   <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{data.nutri_score}}.svg"
-                    *ngIf='data.nutri_score != ""' />
+                    *ngIf='data.nutri_score != null' />
   
-                  <img src="../../../assets/nutriscor.png" *ngIf='data.nutri_score === ""'
+                  <img src="../../../assets/nutriscor.png" *ngIf='data.nutri_score === null'
                     style="opacity: .3;" />
   
                   <img src="https://static.openfoodfacts.org/images/misc/nova-group-{{data.nova_group}}.svg"
-                    *ngIf='data.nova_group != ""'>
+                    *ngIf='data.nova_group != null'>
   
-                  <img src="../../../assets/nova-group-4.png" *ngIf='data.nova_group === ""' style="opacity: .3;">
+                  <img src="../../../assets/nova-group-4.png" *ngIf='data.nova_group === null' style="opacity: .3;">
                 </div>
               </ion-card-content>
             </ion-col>
