@@ -192,22 +192,24 @@ export class Tab1Page {
   }
 
   searchCodebar() {
+    this.router.navigateByUrl(`/tabs/tab3`);
+    console.log(this.router.url)
     const options: BarcodeScannerOptions = {
       prompt: 'Encadrez un code barres avec le viseur pour le balayer',
     };
 
     this.barcodeScanner
       .scan(options)
-      .then((barcodeData) => {
+      .then(async (barcodeData) => {
         this.globalService.codebar = barcodeData.text;
-        console.log('scan: ' + this.globalService.codebar);
-        if(this.router.url === "/tabs/tab1") {
-          this.router.navigated = false;
-          this.router.navigateByUrl(`/tabs/tab1`);
-        } else {
-          this.router.navigateByUrl(`/tabs/tab1`);
-        }
-        
+        this.router.navigateByUrl(`/tabs/tab1`);
+
+        // if(this.router.url === "/tabs/tab1") {
+        //   console.log('Im in .....');
+        //   // this.router.navigated = false;;
+        // } else {
+        //   this.router.navigateByUrl(`/tabs/tab1`);
+        // }
       })
       .catch((err) => {
         console.log('Error', err);

@@ -1,24 +1,26 @@
-import { Component } from '@angular/core';
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
-import { GlobalService } from 'src/app/service/global.service';
 import { Router } from '@angular/router';
-import { Tab1Page } from '../accueil/tab1.page';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { AlertController } from '@ionic/angular';
+import { GlobalService } from './../../service/global.service';
+import { ApiService } from './../../service/api.service';
+import { Component, OnInit } from "@angular/core";
+import { Plugins } from "@capacitor/core";
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss'],
+  selector: "app-tab5",
+  templateUrl: "./tab3.page.html",
+  styleUrls: ["./tab3.page.scss"],
 })
-export class TabsPage {
+export class Tab3Page implements OnInit {
   constructor(
-    private barcodeScanner: BarcodeScanner,
+    private apiService: ApiService,
     public globalService: GlobalService,
-    private router: Router,
     private alertController: AlertController,
-    private tab1: Tab1Page
+    private barcodeScanner: BarcodeScanner,
+    private router: Router
   ) {}
 
+  ngOnInit() {}
   searchCodebar() {
     this.router.navigateByUrl(`/tabs/tab3`);
     console.log(this.router.url)

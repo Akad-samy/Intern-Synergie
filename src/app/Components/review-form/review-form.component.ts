@@ -57,6 +57,7 @@ export class ReviewFormComponent implements OnInit {
       console.log(toastData);
       toastData.present();
     });
+
   }
 
   starmark(index: number) {

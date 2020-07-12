@@ -1,6 +1,6 @@
 import { ApiService } from "src/app/service/api.service";
 import { ReviewFormComponent } from "./../review-form/review-form.component";
-import { Component, OnInit, Input  } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { GlobalService } from "src/app/service/global.service";
 
@@ -10,8 +10,9 @@ import { GlobalService } from "src/app/service/global.service";
   styleUrls: ["./reviews.component.scss"],
 })
 export class ReviewsComponent {
-  @Input() id: any
+  @Input() id: any;
   page = 1;
+  dataLength;
   maxPage;
   reviews = [];
   skeleton;
@@ -19,8 +20,7 @@ export class ReviewsComponent {
     private modalController: ModalController,
     public globalService: GlobalService,
     private apiService: ApiService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     // this.showReviews();
@@ -28,22 +28,35 @@ export class ReviewsComponent {
   ngOnChanges() {
     this.reviews = [];
     this.page = 1;
-    this.showReviews()
+    this.showReviews();
   }
 
   showReviews() {
-    this.skeleton = true
-    console.log(this.globalService.codebar)
+    this.skeleton = true;
+    console.log(this.globalService.codebar);
     this.apiService
       .getReviews(this.globalService.codebar, this.page)
       .subscribe((e) => {
-        this.skeleton = false
+        this.skeleton = false;
         this.maxPage = e["pagination"].total_pages;
         console.log(e);
         this.reviews = this.reviews.concat(e["data"]);
       });
   }
 
+  doRefresh(event) {
+    this.apiService
+      .getReviews(this.globalService.codebar, this.page)
+      .subscribe((e) => {
+        this.maxPage = e["pagination"].total_pages;
+        this.dataLength = e['pagination'].total;
+        if(this.reviews.length < this.dataLength){
+          this.reviews = [];
+          this.reviews = this.reviews.concat(e["data"]);
+        }
+        event.target.complete();
+      });
+  }
   async addReview() {
     const modal = await this.modalController.create({
       component: ReviewFormComponent,
