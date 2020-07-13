@@ -16,6 +16,7 @@
 
 </ion-toolbar>
 <ion-content [fullscreen]="true">
+  <div>
   <!-- <div *ngIf="myInput === ''">
 
   </div> -->
@@ -86,8 +87,18 @@
       </ion-card>
     </div>
 
-    <ion-button (click)="nextPage($event)" expand="block" fill="clear" shape="round">
+    <!-- <ion-list></ion-list> -->
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+    <!-- <ion-button (click)="nextPage($event)" expand="block" fill="clear" shape="round">
       Afficher Plus
-    </ion-button>
+    </ion-button> -->
   </div>
 </ion-content>

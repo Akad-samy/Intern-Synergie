@@ -30,6 +30,7 @@ import {
 export class tab2Page {
   prods = [];
   prod;
+  response;
   myInput = "";
   pageSize = 10;
   page = 1;
@@ -58,9 +59,23 @@ export class tab2Page {
   ionViewWillEnter() {
     // this.getProduct()
   }
+  loadData(event){
+    setTimeout(() => {
+      event.target.complete();
+      ++this.page;
+    console.log(this.page + " produit: " + this.myInput);
+    this.getProduct();
+    
+    if (this.page == this.response["pagination"]["total_pages"]) {
+      event.target.disabled = true;
+    }
+    }, 1000);
+    
+  }
+
 
   async getProduct() {
-    this.skeleton = true;
+    this.skeleton = false;
     if (this.myInput === undefined || this.myInput.match(".*\b[0-9]\b")) {
       // this.loadingController.dismiss();
       this.skeleton = false;
@@ -77,15 +92,18 @@ export class tab2Page {
         .subscribe(
           async (e) => {
             console.log(e);
-
+            this.response = e;
+            console.log(this.response);
             this.skeleton = false;
 
+            
             if (e["status"] === 1) {
               if (e["data"].length > 1) {
                 if (e["pagination"].current_page === 1) {
                   this.prods = [];
                 }
-                this.prods = this.prods.concat(e["data"]);
+                this.prods.push(...e["data"]);
+                //  this.prods = this.prods.concat(e["data"]);
                 this.maxPage = e["pagination"].total_pages;
                 console.log(this.prods);
               } else {
@@ -114,14 +132,14 @@ export class tab2Page {
     this.router.navigateByUrl(`/tabs/tab1`);
   }
 
-  nextPage(event) {
-    ++this.page;
-    console.log(this.page + " produit: " + this.myInput);
-    this.getProduct();
+  // nextPage(event) {
+  //   ++this.page;
+  //   console.log(this.page + " produit: " + this.myInput);
+  //   this.getProduct();
     // if (this.page === this.maxPage) {
     //   event.target.disabled = true;
     // }
-  }
+  // }
   onChangeTime() {
     this.page = 1;
     this.pageSize = 10;
