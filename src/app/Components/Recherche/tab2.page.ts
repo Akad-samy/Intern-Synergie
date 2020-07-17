@@ -63,14 +63,12 @@ export class tab2Page {
     setTimeout(() => {
       event.target.complete();
       ++this.page;
-    console.log(this.page + " produit: " + this.myInput);
-    this.getProduct();
-    
-    if (this.page == this.response["pagination"]["total_pages"]) {
-      event.target.disabled = true;
-    }
-    }, 1000);
-    
+      console.log(this.page + " produit: " + this.myInput);
+      this.getProduct();
+      if (this.page == this.response["pagination"]["total_pages"]) {
+        event.target.disabled = true;
+      }
+    }, 3000);
   }
 
 

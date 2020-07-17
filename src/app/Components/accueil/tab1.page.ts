@@ -192,7 +192,9 @@ export class Tab1Page {
   }
 
   searchCodebar() {
+    
     this.router.navigateByUrl(`/tabs/tab3`);
+
     console.log(this.router.url)
     const options: BarcodeScannerOptions = {
       prompt: 'Encadrez un code barres avec le viseur pour le balayer',
